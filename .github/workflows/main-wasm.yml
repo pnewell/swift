@@ -35,6 +35,22 @@ jobs:
             ~/.swiftpm/
           key: ${{ runner.os }}-swift-build-${{ hashFiles('**/Package.swift') }}
 
+      - name: Install swiftly
+        run: |
+          curl -O https://download.swift.org/swiftly/darwin/swiftly.pkg && \
+            installer -pkg swiftly.pkg -target CurrentUserHomeDirectory && \
+            ~/.swiftly/bin/swiftly init --quiet-shell-followup && \
+            . "${SWIFTLY_HOME_DIR:-$HOME/.swiftly}/env.sh" && \
+            hash -r
+
+      - name: Init swiftly
+        run: |
+          ~/.swiftly/bin/swiftly init
+
+      - name: Download toolchain
+        run: |
+          swiftly install swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a
+
       # 3. Update all Swift sub-repos to your fork’s branches
       - name: Update checkout
         run: |
@@ -45,10 +61,21 @@ jobs:
       - name: Update checkout to branch
         run: |
           utils/update-checkout \
-            --tag swift-DEVELOPMENT-SNAPSHOT-2025-07-23-a
+            --tag swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a
+
+      # 3. Update all Swift sub-repos to your fork’s branches
+      - name: Setup SWIFT_TOOLS_PATH
+        run: |
+          SWIFT_TOOLS_PATH=~/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
 
       # 4. Build the toolchain and run basic tests
       - name: Build Swift toolchain
         run: |
           utils/build-script \
-             --build-wasm-stdlib
+            --skip-build-llvm \
+            --skip-build-swift \
+            --skip-build-cmark \
+            --build-wasm-stdlib \
+            --native-swift-tools-path="$SWIFT_TOOLS_PATH" \
+            --native-llvm-tools-path="$SWIFT_TOOLS_PATH" \
+            --native-clang-tools-path="$SWIFT_TOOLS_PATH"
