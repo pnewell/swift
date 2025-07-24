@@ -43,13 +43,9 @@ jobs:
             . "${SWIFTLY_HOME_DIR:-$HOME/.swiftly}/env.sh" && \
             hash -r
 
-      - name: Init swiftly
-        run: |
-          ~/.swiftly/bin/swiftly init
-
       - name: Download toolchain
         run: |
-          swiftly install swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a
+          ~/.swiftly/bin/swiftly install swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a
 
       # 3. Update all Swift sub-repos to your fork’s branches
       - name: Update checkout
