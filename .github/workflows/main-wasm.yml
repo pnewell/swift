@@ -17,7 +17,7 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 120
     env:
-      SWIFT_TOOLS_PATH: ${{ runner.home }}/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
+      SWIFT_TOOLS_PATH: /Users/runner/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
 
     steps:
       # 1. Check out your code
