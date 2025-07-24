@@ -16,6 +16,8 @@ jobs:
     # Use the hosted macOS runner (supports both Intel & ARM)
     runs-on: macos-latest
     timeout-minutes: 120
+    env:
+      SWIFT_TOOLS_PATH: ${{ runner.home }}/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
 
     steps:
       # 1. Check out your code
@@ -59,11 +61,6 @@ jobs:
         run: |
           utils/update-checkout \
             --tag swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a
-
-      # 3. Update all Swift sub-repos to your fork’s branches
-      - name: Setup SWIFT_TOOLS_PATH
-        run: |
-          SWIFT_TOOLS_PATH=/Users/runner/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
 
       # 4. Build the toolchain and run basic tests
       - name: Build Swift toolchain
