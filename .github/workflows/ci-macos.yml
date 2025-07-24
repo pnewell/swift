@@ -39,8 +39,7 @@ jobs:
       - name: Update checkout
         run: |
           utils/update-checkout \
-            --clone \
-            --scheme swift
+            --clone
 
       # 4. Build the toolchain and run basic tests
       - name: Build Swift toolchain
