@@ -1,4 +1,4 @@
-ame: Swift macOS CI
+name: Swift macOS CI
 
 # Trigger on pushes (or PRs) to your main branches
 on:
