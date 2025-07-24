@@ -1,0 +1,55 @@
+name: Swift macOS CI
+
+# Trigger on pushes (or PRs) to your main branches
+on:
+  push:
+    branches:
+      - main
+      - release/*
+  pull_request:
+    branches:
+      - main
+      - release/*
+
+jobs:
+  build:
+    # Use the hosted macOS runner (supports both Intel & ARM)
+    runs-on: macos-latest
+    timeout-minutes: 120
+
+    steps:
+      # 1. Check out your code
+      - name: Checkout Swift
+        uses: actions/checkout@v3
+        with:
+          # fetch submodules if you use update-checkout
+          submodules: recursive
+          fetch-depth: 1        # ← only the latest commit of each branch
+
+      # 2. (Optional) cache build artifacts between runs
+      - name: Cache Swift build
+        uses: actions/cache@v3
+        with:
+          path: |
+            .build/
+            ~/.swiftpm/
+          key: ${{ runner.os }}-swift-build-${{ hashFiles('**/Package.swift') }}
+
+      # 3. Update all Swift sub-repos to your fork’s branches
+      - name: Update checkout
+        run: |
+          utils/update-checkout \
+            --clone \
+            --scheme swift
+
+      # 3. Update all Swift sub-repos to your fork’s branches
+      - name: Update checkout to branch
+        run: |
+          utils/update-checkout \
+            --tag swift-DEVELOPMENT-SNAPSHOT-2025-07-23-a
+
+      # 4. Build the toolchain and run basic tests
+      - name: Build Swift toolchain
+        run: |
+          utils/build-script \
+             --build-wasm-stdlib
