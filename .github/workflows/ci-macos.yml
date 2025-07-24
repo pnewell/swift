@@ -24,6 +24,7 @@ jobs:
         with:
           # fetch submodules if you use update-checkout
           submodules: recursive
+          fetch-depth: 1        # ← only the latest commit of each branch
 
       # 2. (Optional) cache build artifacts between runs
       - name: Cache Swift build
@@ -39,8 +40,7 @@ jobs:
         run: |
           utils/update-checkout \
             --clone-with-ssh \
-            --scheme swift \
-            --clone-depth 1
+            --scheme swift
 
       # 4. Build the toolchain and run basic tests
       - name: Build Swift toolchain
