@@ -4029,9 +4029,10 @@ namespace {
           }
           if (selfIdx) {
             func->setSelfIndex(selfIdx.value());
-            if (Impl.SwiftContext.LangOpts.hasFeature(
-                    Feature::AddressableParameters))
-              func->getImplicitSelfDecl()->setAddressable();
+            if (!dc->getDeclaredInterfaceType()->hasReferenceSemantics() &&
+                !importedName.importAsMember())
+              func->getAttrs().add(new (Impl.SwiftContext)
+                                       AddressableSelfAttr(true));
           } else {
             func->setStatic();
             func->setImportAsStaticMember();
