@@ -70,7 +70,6 @@ jobs:
             --skip-build-swift \
             --skip-build-cmark \
             --build-wasm-stdlib \
-            --build-runtime-with-host-compiler \
             --native-swift-tools-path="$SWIFT_TOOLS_PATH" \
             --native-llvm-tools-path="$SWIFT_TOOLS_PATH" \
             --native-clang-tools-path="$SWIFT_TOOLS_PATH"
