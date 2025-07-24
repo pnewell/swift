@@ -39,8 +39,7 @@ jobs:
       - name: Update checkout
         run: |
           utils/update-checkout \
-            --clone \
-            --scheme swift
+            --clone
 
       # 3. Update all Swift sub-repos to your fork’s branches
       - name: Update checkout to branch
