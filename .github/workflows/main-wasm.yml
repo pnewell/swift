@@ -62,7 +62,7 @@ jobs:
       # 3. Update all Swift sub-repos to your fork’s branches
       - name: Setup SWIFT_TOOLS_PATH
         run: |
-          SWIFT_TOOLS_PATH=~/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
+          SWIFT_TOOLS_PATH=/Users/runner/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-07-18-a.xctoolchain/usr/bin
 
       # 4. Build the toolchain and run basic tests
       - name: Build Swift toolchain
